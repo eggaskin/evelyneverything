@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import siteConfig from '../../site.config';
+---
+
+<BaseLayout title="Evelyn Everything" description="Thoughts, notes, and things I'm learning." variant="blog">
+  <div class="container landing">
+    <h1>{siteConfig.blog.title}</h1>
+    <p class="tagline">{siteConfig.blog.tagline}</p>
+    <div class="links">
+      <a href="/blog" class="btn btn--primary">Read the Blog</a>
+      <a href="/projects" class="btn btn--secondary">See Projects</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .landing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60vh;
+    gap: 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .tagline {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  .links {
+    display: flex;
+    gap: 1rem;
+  }
+</style>

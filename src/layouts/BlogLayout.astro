@@ -1,0 +1,103 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  topics?: string[];
+}
+
+const { title, description, pubDate, updatedDate, topics } = Astro.props;
+
+const dateStr = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const updatedStr = updatedDate?.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description} variant="blog">
+  <article class="container">
+    <header class="post-header">
+      <time datetime={pubDate.toISOString()}>{dateStr}</time>
+      {updatedStr && (
+        <span class="updated">Updated {updatedStr}</span>
+      )}
+      <h1>{title}</h1>
+      {description && <p class="description">{description}</p>}
+      {topics && topics.length > 0 && (
+        <div class="topics">
+          {topics.map(topic => (
+            <span class="tag">{topic}</span>
+          ))}
+        </div>
+      )}
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+    <div class="back-link">
+      <a href="/blog">&larr; All posts</a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  time {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .updated {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-left: 0.75rem;
+  }
+
+  h1 {
+    margin: 0.75rem 0 0.5rem;
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .back-link {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .back-link a {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .back-link a:hover {
+    color: var(--accent);
+  }
+</style>
