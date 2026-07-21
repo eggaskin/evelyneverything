@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<BaseLayout title="Projects | Evelyn Everything" description="Things I've built.">
+  <div class="container">
+    <header class="page-header">
+      <h1>Projects</h1>
+      <p>Things I've built.</p>
+    </header>
+    <div class="projects-grid">
+      {projects.map(project => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          pubDate={project.data.pubDate}
+          slug={project.id}
+          tags={project.data.tags}
+          links={project.data.links}
+          image={project.data.image}
+        />
+      ))}
+    </div>
+    {projects.length === 0 && (
+      <p class="empty">No projects yet. Check back soon.</p>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: 2rem;
+  }
+
+  .page-header h1 {
+    margin-bottom: 0.35rem;
+  }
+
+  .page-header p {
+    color: var(--text-secondary);
+    margin-bottom: 0;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .empty {
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 3rem 0;
+  }
+</style>

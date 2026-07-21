@@ -1,0 +1,79 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  slug: string;
+  topics?: string[];
+}
+
+const { title, description, pubDate, slug, topics } = Astro.props;
+
+const dateStr = pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article class="post-card">
+  <a href={`/blog/${slug}`} class="card-link">
+    <div class="card-content">
+      <time datetime={pubDate.toISOString()}>{dateStr}</time>
+      <h3>{title}</h3>
+      <p>{description}</p>
+      {topics && topics.length > 0 && (
+        <div class="topics">
+          {topics.map(topic => (
+            <span class="tag">{topic}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .post-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.15s ease;
+  }
+
+  .post-card:hover {
+    border-color: var(--accent);
+  }
+
+  .card-link {
+    display: block;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-link:hover {
+    color: inherit;
+  }
+
+  time {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  h3 {
+    margin: 0.5rem 0 0.35rem;
+    color: var(--text);
+  }
+
+  p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+</style>

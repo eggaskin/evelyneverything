@@ -1,0 +1,73 @@
+---
+import siteConfig from '../../site.config';
+
+interface Props {
+  variant?: 'blog' | 'resume';
+}
+
+const { variant = 'blog' } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="site-name">{siteConfig.name}</a>
+    <nav>
+      {variant === 'blog' ? (
+        <ul class="nav-links">
+          <li><a href="/blog" class:list={[{ active: currentPath.startsWith('/blog') }]}>Blog</a></li>
+          <li><a href="/projects" class:list={[{ active: currentPath.startsWith('/projects') }]}>Projects</a></li>
+          <li><a href="/resume" class:list={[{ active: currentPath.startsWith('/resume') }]}>Resume</a></li>
+        </ul>
+      ) : (
+        <ul class="nav-links">
+          <li><a href="/projects" class:list={[{ active: currentPath.startsWith('/projects') }]}>Projects</a></li>
+        </ul>
+      )}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .site-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .site-name:hover {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--accent);
+  }
+</style>

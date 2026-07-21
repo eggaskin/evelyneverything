@@ -1,0 +1,171 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import { resume } from '../data/resume';
+import { getCollection } from 'astro:content';
+import siteConfig from '../../site.config';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<BaseLayout title={siteConfig.resume.title} description={siteConfig.resume.tagline} variant="resume">
+  <div class="container">
+    <section class="resume-hero">
+      <PhotoPlaceholder name={resume.name} src={resume.photo !== '/profile.jpg' ? resume.photo : undefined} size={120} />
+      <div class="hero-text">
+        <h1>{resume.name}</h1>
+        <p class="tagline">{resume.tagline}</p>
+        <div class="contact-row">
+          <a href={`mailto:${resume.contact.email}`} class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            Email
+          </a>
+          <a href={resume.contact.github} class="contact-link" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            GitHub
+          </a>
+          <a href={resume.contact.linkedin} class="contact-link" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>Major</h2>
+      <p>{resume.major}</p>
+    </section>
+
+    <section class="resume-section">
+      <h2>Skill Niches</h2>
+      <div class="skill-list">
+        {resume.skillNiches.map(skill => (
+          <span class="tag tag--accent">{skill}</span>
+        ))}
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>Education</h2>
+      {resume.education.map(edu => (
+        <div class="education-item">
+          <strong>{edu.degree}</strong>
+          <span class="school">{edu.school}</span>
+          <span class="year">{edu.year}</span>
+        </div>
+      ))}
+    </section>
+
+    <section class="resume-section">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        {projects.map(project => (
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            pubDate={project.data.pubDate}
+            slug={project.id}
+            tags={project.data.tags}
+            links={project.data.links}
+            image={project.data.image}
+            compact
+          />
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .resume-hero {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-text h1 {
+    margin: 0 0 0.25rem;
+  }
+
+  .tagline {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .contact-link:hover {
+    color: var(--accent);
+  }
+
+  .resume-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .resume-section h2 {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .education-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.75rem 0;
+  }
+
+  .school {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .year {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .resume-hero {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .contact-row {
+      justify-content: center;
+    }
+  }
+</style>
