@@ -2,15 +2,16 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogPostCard from '../../components/BlogPostCard.astro';
 import { getPublished } from '../../utils/collections';
+import siteConfig from '../../../site.config';
 
 const posts = await getPublished('blog');
 ---
 
-<BaseLayout title="Blog | Evelyn Everything" description="Thoughts, notes, and things I'm learning.">
+<BaseLayout title={`Blog | ${siteConfig.blog.title}`} description={siteConfig.blog.tagline}>
   <div class="container">
     <header class="page-header">
       <h1>Blog</h1>
-      <p>Thoughts, notes, and things I'm learning.</p>
+      <p>{siteConfig.blog.tagline}</p>
     </header>
     <div class="posts-list">
       {posts.map(post => (

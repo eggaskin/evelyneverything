@@ -1,43 +1,66 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import siteConfig from '../../site.config';
+import ProfileHeader from '../components/ProfileHeader.astro';
+import Skills from '../components/Skills.astro';
+import { resume } from '../data/resume';
+import { getPublished } from '../utils/collections';
 import { url } from '../utils/url';
+import siteConfig from '../../site.config';
+
+const projects = await getPublished('projects');
 ---
 
-<BaseLayout title="Evelyn Everything" description="Thoughts, notes, and things I'm learning." variant="blog">
-  <div class="container landing">
-    <h1>{siteConfig.blog.title}</h1>
-    <p class="tagline">{siteConfig.blog.tagline}</p>
-    <div class="links">
-      <a href={url('/blog')} class="btn btn--primary">Read the Blog</a>
-      <a href={url('/projects')} class="btn btn--secondary">See Projects</a>
+<BaseLayout title={siteConfig.name} description={resume.tagline} variant="blog">
+  <div class="container">
+    <ProfileHeader />
+
+    <section class="page-section">
+      <h2>Skills</h2>
+      <Skills />
+    </section>
+
+    {projects.length > 0 && (
+      <section class="page-section">
+        <h2>Projects</h2>
+        <ul class="project-list">
+          {projects.map(project => (
+            <li>
+              <a href={url(`/projects/${project.id}`)}>{project.data.title}</a>
+              <span class="project-description">{project.data.description}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <div class="home-links">
+      <a href={url('/resume')} class="btn btn--primary">View full resume</a>
+      <a href={url('/blog')} class="btn btn--secondary">Read the blog</a>
     </div>
   </div>
 </BaseLayout>
 
 <style>
-  .landing {
+  .project-list {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    min-height: 60vh;
-    gap: 1rem;
+    gap: 0.6rem;
   }
 
-  h1 {
-    font-size: 2.5rem;
+  .project-list a {
+    font-weight: 500;
   }
 
-  .tagline {
-    font-size: 1.15rem;
+  .project-description {
+    display: block;
+    font-size: 0.85rem;
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
   }
 
-  .links {
+  .home-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
   }
 </style>
