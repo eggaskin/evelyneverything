@@ -20,17 +20,14 @@ const projects = await getPublished('projects');
     </section>
 
     {projects.length > 0 && (
-      <section class="page-section">
-        <h2>Projects</h2>
+      <div class="check-out">
+        <p class="check-out-label">Check out:</p>
         <ul class="project-list">
           {projects.map(project => (
-            <li>
-              <a href={url(`/projects/${project.id}`)}>{project.data.title}</a>
-              <span class="project-description">{project.data.description}</span>
-            </li>
+            <li><a href={url(`/projects/${project.id}`)}>{project.data.title}</a></li>
           ))}
         </ul>
-      </section>
+      </div>
     )}
 
     <div class="home-links">
@@ -41,21 +38,24 @@ const projects = await getPublished('projects');
 </BaseLayout>
 
 <style>
+  .check-out {
+    margin-bottom: 2.5rem;
+  }
+
+  .check-out-label {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
   .project-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 0.2rem;
   }
 
   .project-list a {
     font-weight: 500;
-  }
-
-  .project-description {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
   }
 
   .home-links {
