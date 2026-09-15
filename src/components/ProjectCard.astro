@@ -1,5 +1,6 @@
 ---
 import ProjectLinks from './ProjectLinks.astro';
+import { url } from '../utils/url';
 
 interface Props {
   title: string;
@@ -21,10 +22,10 @@ const dateStr = pubDate.toLocaleDateString('en-US', {
 ---
 
 <article class:list={['project-card', { 'project-card--compact': compact }]}>
-  <a href={`/projects/${slug}`} class="card-link">
+  <a href={url(`/projects/${slug}`)} class="card-link">
     {image && (
       <div class="card-image">
-        <img src={image} alt={title} loading="lazy" />
+        <img src={url(image)} alt={title} loading="lazy" />
       </div>
     )}
     <div class="card-content">
@@ -38,13 +39,14 @@ const dateStr = pubDate.toLocaleDateString('en-US', {
           ))}
         </div>
       )}
-      {links && links.length > 0 && (
-        <div class="links">
-          <ProjectLinks links={links} />
-        </div>
-      )}
     </div>
   </a>
+  {/* Kept outside .card-link: nested <a> elements are invalid HTML and break the card link. */}
+  {links && links.length > 0 && (
+    <div class="links">
+      <ProjectLinks links={links} />
+    </div>
+  )}
 </article>
 
 <style>
@@ -104,7 +106,7 @@ const dateStr = pubDate.toLocaleDateString('en-US', {
   }
 
   .links {
-    margin-top: 0.5rem;
+    padding: 0 1.25rem 1.25rem;
   }
 
   /* Compact variant for resume */
@@ -114,5 +116,9 @@ const dateStr = pubDate.toLocaleDateString('en-US', {
 
   .project-card--compact .card-content {
     padding: 1rem;
+  }
+
+  .project-card--compact .links {
+    padding: 0 1rem 1rem;
   }
 </style>

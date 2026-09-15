@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { url } from '../utils/url';
 
 interface Props {
   title: string;
@@ -45,7 +46,7 @@ const updatedStr = updatedDate?.toLocaleDateString('en-US', {
       <slot />
     </div>
     <div class="back-link">
-      <a href="/blog">&larr; All posts</a>
+      <a href={url('/blog')}>&larr; All posts</a>
     </div>
   </article>
 </BaseLayout>

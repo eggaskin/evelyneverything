@@ -1,27 +1,28 @@
 ---
 import siteConfig from '../../site.config';
+import { url, stripBase } from '../utils/url';
 
 interface Props {
   variant?: 'blog' | 'resume';
 }
 
 const { variant = 'blog' } = Astro.props;
-const currentPath = Astro.url.pathname;
+const currentPath = stripBase(Astro.url.pathname);
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="site-name">{siteConfig.name}</a>
+    <a href={url('/')} class="site-name">{siteConfig.name}</a>
     <nav>
       {variant === 'blog' ? (
         <ul class="nav-links">
-          <li><a href="/blog" class:list={[{ active: currentPath.startsWith('/blog') }]}>Blog</a></li>
-          <li><a href="/projects" class:list={[{ active: currentPath.startsWith('/projects') }]}>Projects</a></li>
-          <li><a href="/resume" class:list={[{ active: currentPath.startsWith('/resume') }]}>Resume</a></li>
+          <li><a href={url('/blog')} class:list={[{ active: currentPath.startsWith('/blog') }]}>Blog</a></li>
+          <li><a href={url('/projects')} class:list={[{ active: currentPath.startsWith('/projects') }]}>Projects</a></li>
+          <li><a href={url('/resume')} class:list={[{ active: currentPath.startsWith('/resume') }]}>Resume</a></li>
         </ul>
       ) : (
         <ul class="nav-links">
-          <li><a href="/projects" class:list={[{ active: currentPath.startsWith('/projects') }]}>Projects</a></li>
+          <li><a href={url('/projects')} class:list={[{ active: currentPath.startsWith('/projects') }]}>Projects</a></li>
         </ul>
       )}
     </nav>

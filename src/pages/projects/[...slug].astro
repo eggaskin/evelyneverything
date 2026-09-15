@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectLinks from '../../components/ProjectLinks.astro';
+import { url } from '../../utils/url';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -42,14 +43,14 @@ const dateStr = project.data.pubDate.toLocaleDateString('en-US', {
     </header>
     {project.data.image && (
       <div class="project-image">
-        <img src={project.data.image} alt={project.data.title} />
+        <img src={url(project.data.image)} alt={project.data.title} />
       </div>
     )}
     <div class="prose">
       <Content />
     </div>
     <div class="back-link">
-      <a href="/projects">&larr; All projects</a>
+      <a href={url('/projects')}>&larr; All projects</a>
     </div>
   </article>
 </BaseLayout>
