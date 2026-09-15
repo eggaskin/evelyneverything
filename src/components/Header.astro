@@ -13,7 +13,7 @@ const currentPath = stripBase(Astro.url.pathname);
 
 <header class="site-header">
   <div class:list={['container', 'header-inner', { 'container--wide': wide }]}>
-    <a href={url('/')} class="site-name">{siteConfig.name}</a>
+    <a href={url('/')} class="site-name">{siteConfig.title}</a>
     <nav>
       {variant === 'blog' ? (
         <ul class="nav-links">

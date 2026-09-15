@@ -1,20 +1,29 @@
 ---
 import { resume } from '../data/resume';
+
+interface Props {
+  /** Show only the skill niche tags, without the grouped skills list. */
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
 ---
 
-<div class="niches">
+<div class:list={['niches', { 'niches--compact': compact }]}>
   {resume.skillNiches.map(skill => (
     <span class="tag tag--accent">{skill}</span>
   ))}
 </div>
-<dl class="skill-groups">
-  {resume.skills.map(group => (
-    <div>
-      <dt>{group.label}</dt>
-      <dd>{group.items.join(', ')}</dd>
-    </div>
-  ))}
-</dl>
+{!compact && (
+  <dl class="skill-groups">
+    {resume.skills.map(group => (
+      <div>
+        <dt>{group.label}</dt>
+        <dd>{group.items.join(', ')}</dd>
+      </div>
+    ))}
+  </dl>
+)}
 
 <style>
   .niches {
@@ -22,6 +31,10 @@ import { resume } from '../data/resume';
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1rem;
+  }
+
+  .niches--compact {
+    margin-bottom: 0;
   }
 
   .skill-groups {

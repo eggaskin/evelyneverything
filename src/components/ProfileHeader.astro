@@ -2,21 +2,30 @@
 import PhotoPlaceholder from './PhotoPlaceholder.astro';
 import { resume } from '../data/resume';
 
+interface Props {
+  /** Page heading; defaults to the resume name. */
+  title?: string;
+  /** Shorter headline: school and degree only. */
+  compact?: boolean;
+}
+
+const { title = resume.name, compact = false } = Astro.props;
+
 const [education] = resume.education;
 const currentJob = resume.experience.find(job => job.current);
 
-const headline = [
-  `${education.degree}, ${education.schoolShort}`,
-  `${education.minor} minor`,
-  `Graduating ${education.year}`,
-  currentJob && `${currentJob.role}, ${currentJob.org}`,
-].filter(Boolean);
+const headline = compact
+  ? [`${education.schoolShort} ${education.degree}`]
+  : [
+      `${education.schoolShort} ${education.year} – ${education.degree}, ${education.minor}`,
+      currentJob && `${currentJob.role}, ${currentJob.org}`,
+    ].filter(Boolean);
 ---
 
 <section class="profile">
   <PhotoPlaceholder name={resume.name} src={resume.photo} size={120} />
   <div class="profile-text">
-    <h1>{resume.name}</h1>
+    <h1>{title}</h1>
     <p class="headline">
       <span class="headline-items">
         {headline.map(item => <span>{item}</span>)}

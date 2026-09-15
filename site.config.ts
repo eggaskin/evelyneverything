@@ -1,7 +1,6 @@
 export default {
-  name: "Evelyn Gaskin",
+  title: "Evelyn Everything",
   blog: {
-    title: "Evelyn Everything",
     tagline: "Thoughts, notes, and things I'm learning.",
   },
   resume: {

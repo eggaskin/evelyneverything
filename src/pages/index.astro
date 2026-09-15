@@ -10,13 +10,13 @@ import siteConfig from '../../site.config';
 const projects = await getPublished('projects');
 ---
 
-<BaseLayout title={siteConfig.name} description={resume.tagline} variant="blog">
+<BaseLayout title={siteConfig.title} description={resume.tagline} variant="blog">
   <div class="container">
-    <ProfileHeader />
+    <ProfileHeader title={siteConfig.title} compact />
 
     <section class="page-section">
       <h2>Skills</h2>
-      <Skills />
+      <Skills compact />
     </section>
 
     {projects.length > 0 && (
