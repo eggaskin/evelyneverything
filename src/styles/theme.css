@@ -1,14 +1,18 @@
 /* === Theme Variables === */
+/* Light: pale blue-green ground, navy text, deep red accent, goldenrod secondary.
+   Dark: near-black red ground, warm off-white text, goldenrod accent, pale blue-green secondary.
+   --on-accent is the text color to use on an accent background. */
 :root {
-  --bg: #FAFAF8;
-  --surface: #F0EFEB;
-  --text: #1A1A1A;
-  --text-secondary: #5A5A5A;
-  --accent: #7C9A72;
-  --accent-hover: #6B8A62;
-  --secondary: #C4704B;
-  --secondary-hover: #B3603D;
-  --border: #DDD9D0;
+  --bg: #F2F7F6;
+  --surface: #E3EEEC;
+  --text: #172A3A;
+  --text-secondary: #44576A;
+  --accent: #7A1F2B;
+  --accent-hover: #5E1520;
+  --on-accent: #FFFFFF;
+  --secondary: #A87B12;
+  --secondary-hover: #8E6710;
+  --border: #C8DAD6;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-serif: "Lora", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
@@ -19,28 +23,30 @@
 }
 
 [data-theme="dark"] {
-  --bg: #1A1A1A;
-  --surface: #252525;
-  --text: #F5F5F0;
-  --text-secondary: #A8A8A0;
-  --accent: #8FB996;
-  --accent-hover: #A0C9A6;
-  --secondary: #D4845A;
-  --secondary-hover: #E09568;
-  --border: #3A3A3A;
+  --bg: #1C0E11;
+  --surface: #2A161B;
+  --text: #F5EEE6;
+  --text-secondary: #CDBFB4;
+  --accent: #E0B040;
+  --accent-hover: #F0C45A;
+  --on-accent: #1C0E11;
+  --secondary: #9FCFC8;
+  --secondary-hover: #B8DDD8;
+  --border: #4A2A31;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1A1A1A;
-    --surface: #252525;
-    --text: #F5F5F0;
-    --text-secondary: #A8A8A0;
-    --accent: #8FB996;
-    --accent-hover: #A0C9A6;
-    --secondary: #D4845A;
-    --secondary-hover: #E09568;
-    --border: #3A3A3A;
+    --bg: #1C0E11;
+    --surface: #2A161B;
+    --text: #F5EEE6;
+    --text-secondary: #CDBFB4;
+    --accent: #E0B040;
+    --accent-hover: #F0C45A;
+    --on-accent: #1C0E11;
+    --secondary: #9FCFC8;
+    --secondary-hover: #B8DDD8;
+    --border: #4A2A31;
   }
 }
 
@@ -196,7 +202,7 @@ p {
 
 .tag--accent {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--accent);
 }
 
@@ -218,12 +224,12 @@ p {
 
 .btn--primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .btn--primary:hover {
   background: var(--accent-hover);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .btn--secondary {
@@ -234,7 +240,7 @@ p {
 
 .btn--secondary:hover {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .btn--ghost {
