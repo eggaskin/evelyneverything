@@ -1,6 +1,7 @@
 ---
 import ProjectLinks from './ProjectLinks.astro';
 import { url } from '../utils/url';
+import { formatDate } from '../utils/date';
 
 interface Props {
   title: string;
@@ -15,10 +16,7 @@ interface Props {
 
 const { title, description, pubDate, slug, tags, links, image, compact = false } = Astro.props;
 
-const dateStr = pubDate.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'short',
-});
+const dateStr = formatDate(pubDate, 'month');
 ---
 
 <article class:list={['project-card', { 'project-card--compact': compact }]}>

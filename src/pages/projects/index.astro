@@ -1,11 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { getCollection } from 'astro:content';
+import { getPublished } from '../../utils/collections';
 
-const projects = (await getCollection('projects')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const projects = await getPublished('projects');
 ---
 
 <BaseLayout title="Projects | Evelyn Everything" description="Things I've built.">

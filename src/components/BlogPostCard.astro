@@ -1,5 +1,6 @@
 ---
 import { url } from '../utils/url';
+import { formatDate } from '../utils/date';
 
 interface Props {
   title: string;
@@ -11,11 +12,7 @@ interface Props {
 
 const { title, description, pubDate, slug, topics } = Astro.props;
 
-const dateStr = pubDate.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-});
+const dateStr = formatDate(pubDate, 'short');
 ---
 
 <article class="post-card">

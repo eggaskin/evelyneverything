@@ -3,12 +3,10 @@ import BaseLayout from './BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import { resume } from '../data/resume';
-import { getCollection } from 'astro:content';
+import { getPublished } from '../utils/collections';
 import siteConfig from '../../site.config';
 
-const projects = (await getCollection('projects')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const projects = await getPublished('projects');
 ---
 
 <BaseLayout title={siteConfig.resume.title} description={siteConfig.resume.tagline} variant="resume">

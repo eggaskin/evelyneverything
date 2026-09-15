@@ -1,11 +1,13 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectLinks from '../../components/ProjectLinks.astro';
 import { url } from '../../utils/url';
+import { formatDate } from '../../utils/date';
+import { getPublished } from '../../utils/collections';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
+  const projects = await getPublished('projects');
   return projects.map(project => ({
     params: { slug: project.id },
     props: { project },
@@ -15,11 +17,7 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 
-const dateStr = project.data.pubDate.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+const dateStr = formatDate(project.data.pubDate);
 ---
 
 <BaseLayout title={`${project.data.title} | Projects`} description={project.data.description} variant="blog">
