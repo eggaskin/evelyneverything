@@ -12,7 +12,7 @@ const projects = await getPublished('projects');
 <BaseLayout title={siteConfig.resume.title} description={siteConfig.resume.tagline} variant="resume">
   <div class="container">
     <section class="resume-hero">
-      <PhotoPlaceholder name={resume.name} src={resume.photo !== '/profile.jpg' ? resume.photo : undefined} size={120} />
+      <PhotoPlaceholder name={resume.name} src={resume.photo} size={120} />
       <div class="hero-text">
         <h1>{resume.name}</h1>
         <p class="tagline">{resume.tagline}</p>

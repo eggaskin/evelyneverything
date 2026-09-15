@@ -1,6 +1,8 @@
+import headshot from './profile.jpg';
+
 export const resume = {
   name: "Evelyn Gaskin",
-  photo: "/profile.jpg",
+  photo: headshot,
   tagline: "I apply ML and data science across domains: vision, language, and outcome data, and build the tools to make sense of it all.",
   skillNiches: [
     "Machine Learning",
