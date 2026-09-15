@@ -33,8 +33,8 @@ export default {
     },
   },
   social: {
-    email: "hello@example.com",
-    github: "https://github.com/evelyneverything",
+    email: "evelyngaskin@gmail.com",
+    github: "https://github.com/eggaskin",
     linkedin: "https://linkedin.com/in/evelyngaskin",
   },
 };

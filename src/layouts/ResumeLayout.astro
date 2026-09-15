@@ -36,11 +36,6 @@ const projects = (await getCollection('projects')).sort(
     </section>
 
     <section class="resume-section">
-      <h2>Major</h2>
-      <p>{resume.major}</p>
-    </section>
-
-    <section class="resume-section">
       <h2>Skill Niches</h2>
       <div class="skill-list">
         {resume.skillNiches.map(skill => (
@@ -50,14 +45,49 @@ const projects = (await getCollection('projects')).sort(
     </section>
 
     <section class="resume-section">
-      <h2>Education</h2>
-      {resume.education.map(edu => (
-        <div class="education-item">
-          <strong>{edu.degree}</strong>
-          <span class="school">{edu.school}</span>
-          <span class="year">{edu.year}</span>
+      <h2>Experience</h2>
+      {resume.experience.map(job => (
+        <div class="entry">
+          <div class="entry-header">
+            <strong>{job.role}</strong>
+            <span class="dates">{job.dates}</span>
+          </div>
+          <span class="entry-sub">{[job.org, job.location].filter(Boolean).join(' · ')}</span>
+          <ul class="highlights">
+            {job.highlights.map(item => <li>{item}</li>)}
+          </ul>
         </div>
       ))}
+    </section>
+
+    <section class="resume-section">
+      <h2>Education</h2>
+      {resume.education.map(edu => (
+        <div class="entry">
+          <div class="entry-header">
+            <strong>{edu.school}</strong>
+            <span class="dates">{edu.dates}</span>
+          </div>
+          <span class="entry-sub">
+            {edu.degree}{edu.minor && `, ${edu.minor} minor`} · Expected {edu.year} · {edu.location}
+          </span>
+          <ul class="highlights">
+            {edu.highlights.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <section class="resume-section">
+      <h2>Skills</h2>
+      <dl class="skills">
+        {resume.skills.map(group => (
+          <div class="skill-group">
+            <dt>{group.label}</dt>
+            <dd>{group.items.join(', ')}</dd>
+          </div>
+        ))}
+      </dl>
     </section>
 
     <section class="resume-section">
@@ -135,20 +165,56 @@ const projects = (await getCollection('projects')).sort(
     gap: 0.5rem;
   }
 
-  .education-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
+  .entry {
     padding: 0.75rem 0;
   }
 
-  .school {
+  .entry-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+  }
+
+  .entry-sub {
+    display: block;
     color: var(--text-secondary);
     font-size: 0.95rem;
   }
 
-  .year {
+  .dates {
     font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .highlights {
+    margin-top: 0.5rem;
+    padding-left: 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .highlights li + li {
+    margin-top: 0.25rem;
+  }
+
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .skills dt {
+    display: inline;
+    font-weight: 600;
+  }
+
+  .skills dt::after {
+    content: ': ';
+  }
+
+  .skills dd {
+    display: inline;
     color: var(--text-secondary);
   }
 
