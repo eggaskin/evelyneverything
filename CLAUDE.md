@@ -45,7 +45,7 @@ npm run preview   # serve the production build
 ## Content
 
 - The frontmatter schema lives in `src/content.config.ts` and is the source of truth.
-- `draft: true` hides an entry from production builds. Drafts still show in `npm run dev` so they can be previewed.
+- `draft: true` hides an entry everywhere, dev and production: no page, card, or link is generated. Remove the flag to publish.
 - Don't rename existing content files: file names are public URLs.
 
 ## Development practices
