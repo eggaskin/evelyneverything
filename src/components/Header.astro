@@ -4,14 +4,15 @@ import { url, stripBase } from '../utils/url';
 
 interface Props {
   variant?: 'blog' | 'resume';
+  wide?: boolean;
 }
 
-const { variant = 'blog' } = Astro.props;
+const { variant = 'blog', wide = false } = Astro.props;
 const currentPath = stripBase(Astro.url.pathname);
 ---
 
 <header class="site-header">
-  <div class="container header-inner">
+  <div class:list={['container', 'header-inner', { 'container--wide': wide }]}>
     <a href={url('/')} class="site-name">{siteConfig.name}</a>
     <nav>
       {variant === 'blog' ? (

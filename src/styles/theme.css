@@ -124,6 +124,17 @@ p {
   max-width: var(--max-width-wide);
 }
 
+/* Titled content section (resume, home) */
+.page-section {
+  margin-bottom: 2.5rem;
+}
+
+.page-section h2 {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
 /* === Content Styling (for blog/project posts) === */
 .prose {
   line-height: 1.75;

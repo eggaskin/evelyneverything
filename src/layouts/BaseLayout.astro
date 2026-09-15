@@ -9,9 +9,11 @@ interface Props {
   title: string;
   description?: string;
   variant?: 'blog' | 'resume';
+  /** Use the wide container width for the header (for multi-column pages). */
+  wide?: boolean;
 }
 
-const { title, description, variant = 'blog' } = Astro.props;
+const { title, description, variant = 'blog', wide = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -35,7 +37,7 @@ const { title, description, variant = 'blog' } = Astro.props;
     </script>
   </head>
   <body>
-    <Header variant={variant} />
+    <Header variant={variant} wide={wide} />
     <main>
       <slot />
     </main>

@@ -14,6 +14,7 @@ export const resume = {
     {
       role: "Data Specialist",
       org: "Ballard Center for Social Impact",
+      current: true,
       dates: "August 2026 – Present",
       highlights: [
         "Building a performance tracker hosted by university to serve 150 employees with PostgreSQL.",
@@ -60,6 +61,7 @@ export const resume = {
   education: [
     {
       school: "Brigham Young University",
+      schoolShort: "BYU",
       location: "Provo, UT",
       degree: "B.S. Computer Science",
       minor: "Global and Community Impact",
