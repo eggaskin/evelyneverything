@@ -70,7 +70,8 @@ npm run preview   # serve the production build
 ### Git workflow
 - **Never commit directly to `main`.** Every push to `main` deploys the live site.
 - One branch per concern, named `fix/…`, `feat/…`, `content/…`, `docs/…`, or `chore/…`.
-- Small, atomic commits that each build. Imperative subject of 72 characters or fewer; the body explains *why*.
+- Small, atomic commits that each build. Imperative subject of 72 characters or fewer.
+- Commit bodies are concise bullets: one short line per change, with the *why* only when it isn't obvious. No paragraphs.
 - Stage specific files rather than `git add -A`. Never commit `dist/`, `.astro/`, `node_modules/`, or local tooling files.
 - Open a PR into `main` and review the diff and a local build before merging.
 
