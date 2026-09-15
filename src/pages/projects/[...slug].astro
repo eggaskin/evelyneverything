@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import BackLink from '../../components/BackLink.astro';
 import ProjectLinks from '../../components/ProjectLinks.astro';
 import { url } from '../../utils/url';
 import { formatDate } from '../../utils/date';
@@ -22,21 +23,31 @@ const dateStr = formatDate(project.data.pubDate);
 
 <BaseLayout title={`${project.data.title} | Projects`} description={project.data.description} variant="blog">
   <article class="container">
+    <BackLink path="/projects" label="All projects" />
     <header class="project-header">
-      <time datetime={project.data.pubDate.toISOString()}>{dateStr}</time>
-      <h1>{project.data.title}</h1>
-      <p class="description">{project.data.description}</p>
-      {project.data.tags && project.data.tags.length > 0 && (
-        <div class="tags">
-          {project.data.tags.map(tag => (
-            <span class="tag">{tag}</span>
-          ))}
-        </div>
-      )}
+      <div class="project-header-main">
+        <time datetime={project.data.pubDate.toISOString()}>{dateStr}</time>
+        <h1>{project.data.title}</h1>
+        <p class="description">{project.data.description}</p>
+        {project.data.tags && project.data.tags.length > 0 && (
+          <div class="tags">
+            {project.data.tags.map(tag => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
       {project.data.links && project.data.links.length > 0 && (
-        <div class="links">
-          <ProjectLinks links={project.data.links} />
-        </div>
+        <details class="links-menu">
+          <summary aria-label="Project links" title="Project links">
+            <span class="links-menu-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="15" y1="3" x2="15" y2="21"></line></svg>
+            </span>
+          </summary>
+          <div class="links-menu-panel">
+            <ProjectLinks links={project.data.links} />
+          </div>
+        </details>
       )}
     </header>
     {project.data.image && (
@@ -47,17 +58,22 @@ const dateStr = formatDate(project.data.pubDate);
     <div class="prose">
       <Content />
     </div>
-    <div class="back-link">
-      <a href={url('/projects')}>&larr; All projects</a>
-    </div>
   </article>
 </BaseLayout>
 
 <style>
   .project-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border);
+  }
+
+  .project-header-main {
+    flex: 1;
+    min-width: 0;
   }
 
   time {
@@ -80,11 +96,79 @@ const dateStr = formatDate(project.data.pubDate);
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    margin-bottom: 1rem;
   }
 
-  .links {
-    margin-top: 0.5rem;
+  /* Project links stay hidden behind a toggle; opening it slides the panel out to the left. */
+  .links-menu {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  /* Keep <summary> at its default display so it keeps native disclosure semantics;
+     the visual box lives on the inner span. */
+  .links-menu summary {
+    list-style: none;
+    cursor: pointer;
+    border-radius: var(--radius);
+  }
+
+  .links-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .links-menu summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .links-menu-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-secondary);
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .links-menu summary:hover .links-menu-icon,
+  .links-menu[open] .links-menu-icon {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .links-menu-panel {
+    position: absolute;
+    top: 0;
+    right: calc(100% + 0.5rem);
+    z-index: 5;
+    width: max-content;
+    max-width: calc(100vw - 6rem);
+    padding: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    animation: flow-out 0.18s ease-out;
+    transform-origin: right center;
+  }
+
+  @keyframes flow-out {
+    from {
+      opacity: 0;
+      transform: translateX(0.75rem) scaleX(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .links-menu-panel {
+      animation: none;
+    }
   }
 
   .project-image {
@@ -96,21 +180,5 @@ const dateStr = formatDate(project.data.pubDate);
   .project-image img {
     width: 100%;
     height: auto;
-  }
-
-  .back-link {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .back-link a {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    text-decoration: none;
-  }
-
-  .back-link a:hover {
-    color: var(--accent);
   }
 </style>

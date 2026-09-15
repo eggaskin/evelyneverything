@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import BackLink from '../../components/BackLink.astro';
 import { getPublished } from '../../utils/collections';
 
 const projects = await getPublished('projects');
@@ -8,6 +9,7 @@ const projects = await getPublished('projects');
 
 <BaseLayout title="Projects | Evelyn Everything" description="Things I've built.">
   <div class="container">
+    <BackLink path="/resume" label="Resume" />
     <header class="page-header">
       <h1>Projects</h1>
       <p>Things I've built.</p>

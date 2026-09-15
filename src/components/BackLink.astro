@@ -1,0 +1,29 @@
+---
+import { url } from '../utils/url';
+
+interface Props {
+  /** Internal path, e.g. '/projects'. The site base is added automatically. */
+  path: string;
+  label: string;
+}
+
+const { path, label } = Astro.props;
+---
+
+<a href={url(path)} class="back-link">&larr; {label}</a>
+
+<style>
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+</style>
